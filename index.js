@@ -18,4 +18,4 @@ app.use('/',(req,res)=>{
 res.status(200).json({message:"<h1>Agriculture backend Working<h1>"})
 })
 
-app.listen(port,()=>{ console.log(`App listen port :${port}`)})
+app.listen(port || 9000,()=>{ console.log(`App listen port :${port}`)})
