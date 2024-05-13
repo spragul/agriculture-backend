@@ -114,7 +114,7 @@ export const shopOwnerAuthentication = async (req, res, next) => {
     res.status(400).send({ message: "Token not found", rd: false });
   }
 };
-export const marketpriceAuthentication = async (req, res, next) => {
+export const marketpersonAuthentication = async (req, res, next) => {
   try {
     if (req.headers.authorization) {
       let token = req.headers.authorization.split(" ")[1];

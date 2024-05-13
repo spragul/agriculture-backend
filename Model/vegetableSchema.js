@@ -10,7 +10,7 @@ const vegetableSchema=new mongoose.Schema({
         required:true
     },
     image:{
-        type:url,
+        type:String,
         required:true
     },
     price:{
@@ -18,5 +18,5 @@ const vegetableSchema=new mongoose.Schema({
         required:true
     }
 })
-export const VegetableModel =mongoose.Model('vegetables',vegetableSchema);
+export const VegetableModel =mongoose.model('vegetables',vegetableSchema);
 export default VegetableModel

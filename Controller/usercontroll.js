@@ -235,7 +235,7 @@ export const market = async (req, res) => {
         user.role=user.role;
         user.land=req.body.land;
         user.mobile=req.body.mobile;
-        user.password=user.password;
+        user.password=req.body.password;
         await user.save();
         res.status(201).json({message:"Account update Successful",rd:true})
 
