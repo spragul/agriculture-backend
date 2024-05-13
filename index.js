@@ -24,4 +24,4 @@ app.use('/',(req,res)=>{
 res.status(200).json({message:"<h1>Agriculture backend Working<h1>"})
 })
 
-app.listen(process.env.PORT || '9000',()=>{ console.log(`App listen port :${port}`)})
+app.listen(process.env.PORT || '9000',()=>{ console.log('App listen')})
