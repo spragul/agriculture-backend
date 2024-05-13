@@ -1,10 +1,9 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-
-
 import userrouter from './Routers/userRouter.js';
 import { mongoconnect } from './Database/database.js';
+
 
 dotenv.config();
 const port=process.env.PORT;
