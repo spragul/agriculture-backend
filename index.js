@@ -6,7 +6,6 @@ import { mongoconnect } from './Database/database.js';
 
 
 dotenv.config();
-const port=process.env.PORT;
 const app =express();
 app.use(cors());
 app.use(express.json());
@@ -18,4 +17,4 @@ app.use('/',(req,res)=>{
 res.status(200).json({message:"<h1>Agriculture backend Working<h1>"})
 })
 
-app.listen(port || 9000,()=>{ console.log(`App listen port :${port}`)})
+app.listen(process.env.PORT || '9000',()=>{ console.log(`App listen port :${port}`)})
