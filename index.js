@@ -23,7 +23,7 @@ let res =await mongoose.connect(url);
 
 //router
 app.use('/user',userrouter);
-app.use("vegetable",vegetablerouter)
+app.use("/vegetable",vegetablerouter)
 
 //checking backend
 app.use('/',(req,res)=>{

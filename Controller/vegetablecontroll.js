@@ -2,6 +2,7 @@ import VegetableModel from "../Model/vegetableSchema.js";
 
 //Add vegetable
 export const addvegetable = async (req, res) => {
+  console.log(req.body)
   try {
     const vegetable = await VegetableModel.findOne({ name: req.body.name });
     if (vegetable) {
@@ -13,7 +14,7 @@ export const addvegetable = async (req, res) => {
       if (newvegetable._id) {
         res
           .status(201)
-          .json({ message: "Vegtable Created Sucessfuly", rd: true });
+          .json({ message: "Vegtable Created Sucessfuly",newvegetable, rd: true });
       } else {
         res.status(404).json({ message: "Vegtable not created", rd: false });
       }
@@ -31,7 +32,7 @@ export const allVegetable = async (req, res) => {
   try {
     let vegetable = await VegetableModel.find({});
     if (vegetable.length > 0) {
-      res.status(200).json({ message: "Vegetable list", rd: true });
+      res.status(200).json({ message: "Vegetable list",vegetable, rd: true });
     } else {
       res.status(200).json({ message: "Vegetable list is empty", rd: true });
     }
@@ -46,7 +47,7 @@ export const allVegetable = async (req, res) => {
 //Get one vegetable
 export const oneVegetable = async (req, res) => {
   try {
-    let vegetable = await VegetableModel.findOne({ _id: req.paramas.id });
+    let vegetable = await VegetableModel.findOne({ _id: req.params.id  });
     if (vegetable._id) {
       res.status(200).json({ message: "get one vegetable ", rd: true });
     } else {
@@ -62,6 +63,7 @@ export const oneVegetable = async (req, res) => {
 
 //edit vegetable
 export const changeVegetable = async (req, res) => {
+  console.log(req.body);
   try {
     let vegetable = await VegetableModel.findOne({ _id: req.body._id });
     if (vegetable._id) {
@@ -71,9 +73,9 @@ export const changeVegetable = async (req, res) => {
       vegetable.image = req.body.image;
       vegetable.price = req.body.price;
       let veg = await vegetable.save();
-      res.status(201).json({ message: "Edit Vegetable Successfull" });
+      res.status(201).json({ message: "Edit Vegetable Successfull",veg,rd:true });
     } else {
-      res.status(204).json({ message: "vegetable id not valid", rd: true });
+      res.status(204).json({ message: "vegetable id not valid", rd: false });
     }
   } catch (error) {
     res
@@ -85,14 +87,16 @@ export const changeVegetable = async (req, res) => {
 
 //delete vegetable
 export const deleteVegetable = async (req, res) => {
+  console.log(req.params.id )
   try {
-    const vegetable = await VegetableModel.findOne({ _id: req.paramas.id });
+    const vegetable = await VegetableModel.findOne({ _id: req.params.id });
     if (vegetable._id) {
-      let veg = await VegetableModel.deleteOne({ _id: req.paramas });
+      let veg = await VegetableModel.deleteOne({ _id: req.params.id });
+      console.log(veg)
       console.log(veg);
       res
         .status(201)
-        .json({ message: "Delete Vegetable is successful", rd: true });
+        .json({ message: "Delete Vegetable is successful",veg, rd: true });
     } else {
       res.status(204).json({ message: "Vegetable id is wrong", rd: false });
     }
@@ -107,7 +111,7 @@ export const deleteVegetable = async (req, res) => {
 //change vegetable price
 export const changeprice = async (req, res) => {
   try {
-    const veg = await VegetableModel.findOne({ _id: req.paramas.id });
+    const veg = await VegetableModel.findOne({ _id: req.params.id  });
     if (veg._id) {
       if (req.body.price > 0) {
         let vegprice = await VegetableModel.findByIdAndUpdate(req.params.id, {
