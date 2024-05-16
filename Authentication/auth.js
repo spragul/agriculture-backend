@@ -31,6 +31,7 @@ export const createtoken = async (payload, expiresIntime) => {
 //token exper check
 export const validate = async (req, res, next) => {
   if (req.headers.authorization) {
+    console.log(req.headers.authorization)
     let token = req.headers.authorization.split(" ")[1];
     if (token!=="null") {
       let data = await jwt.decode(token);
