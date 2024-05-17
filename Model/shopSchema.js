@@ -12,26 +12,10 @@ const shopSchema=new mongoose.Schema({
        type:Number,
        required:true
      },
-     product:[
-       {
-        fpName:{
-            type:String,
-            required:true
-        },
-        fpPrice:{
-            type:Number,
-            required:true
-        },
-        fpImage:{
-            type:String,
-            required:true
-        },
-        fpDiscription:{
-            type:String,
-            required:true
-        }
-       }
-     ],
+     product:{
+       type:Array,
+       required:false
+     },
      date: {
         type: Date,
         default: Date.now

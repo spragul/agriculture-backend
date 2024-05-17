@@ -1,5 +1,5 @@
 import express from "express"
-import { admincreateuser, createuser, deleteuser, forgotpassword, getAllUser, login, market, oneUser, resetpassword } from "../Controller/usercontroll.js";
+import { admincreateuser, createuser, deleteuser, forgotpassword, getAllUser, login, updateuser, oneUser, resetpassword } from "../Controller/usercontroll.js";
 import { adminAuthentication, validate } from "../Authentication/auth.js";
 const router=express.Router();
 
@@ -11,7 +11,7 @@ router.post('/login',login);
 router.delete('/delete/:id',adminAuthentication,deleteuser);
 router.post('/forgotpassword',forgotpassword)
 router.put('/reset/:id/:token',resetpassword);
-router.put('/adduser',market);
+router.put('/adduser',validate,updateuser);
 
 
 export default router

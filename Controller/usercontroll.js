@@ -20,7 +20,7 @@ export const createuser = async (req, res) => {
       const hashedpassword = await hashpassword(req.body.password);
       req.body.password = hashedpassword;
       let newuser = await UserModel.create(req.body);
-      if (newuser._id) {
+      if (newuser) {
         res
           .status(200)
           .json({ message: "User Register successfull", rd: true });
@@ -60,7 +60,11 @@ export const login = async (req, res) => {
             myRole: user.role,
             rd: true,
           });
+        } else {
+          res.status(400).json({ message: "Token Error", rd: false });
         }
+      } else {
+        res.status(400).json({ message: "Invalide credentials", rd: false });
       }
     } else {
       res.status(400).json({ message: "Invalide credentials", rd: false });
@@ -147,7 +151,7 @@ export const forgotpassword = async (req, res) => {
       const flink = process.env.FRONTEND_URL;
       const link = `${flink}/resetpassword/${user._id}/${token}`;
       let email = user.email;
-      let data = await sendmailuser(email, link,"Reset password");
+      let data = await sendmailuser(email, link, "Reset password");
       res.send({ message: "Mail send you Mail id", rd: true });
     }
   } catch (error) {
@@ -182,13 +186,11 @@ export const resetpassword = async (req, res) => {
           rd: true,
         });
       } else {
-        res
-          .status(400)
-          .json({
-            message:
-              "token Expried again go forgot password Note:token onely 10mints valid",
-            rd: true,
-          });
+        res.status(400).json({
+          message:
+            "token Expried again go forgot password Note:token onely 10mints valid",
+          rd: true,
+        });
       }
     }
   } catch (error) {
@@ -207,8 +209,13 @@ export const admincreateuser = async (req, res) => {
       req.body.password = hashedpassword;
       let newuser = await UserModel.create(req.body);
       if (newuser._id) {
-        let datas="email"+`${req.body.email}`+"password"+`${req.body.password}`;
-       let mail= await sendmailuser(req.body.email, datas,"Your Account successfully created");
+        let datas =
+          "email" + `${req.body.email}` + "password" + `${req.body.password}`;
+        let mail = await sendmailuser(
+          req.body.email,
+          datas,
+          "Your Account successfully created"
+        );
         res
           .status(200)
           .json({ message: "User Register successfull", rd: true });
@@ -226,21 +233,22 @@ export const admincreateuser = async (req, res) => {
 
 //Add owner and market
 
-export const market = async (req, res) => {
+export const updateuser = async (req, res) => {
   try {
     let user = await UserModel.findOne({ email: req.body.email });
-    if (user._id) {
-        user.name = req.body.name;
-        user.email = user.email;
-        user.role=user.role;
-        user.land=req.body.land;
-        user.mobile=req.body.mobile;
-        user.password=req.body.password;
-        await user.save();
-        res.status(201).json({message:"Account update Successful",rd:true})
-
-      } else {
-        res.status(204).send({ message: "user not allowed update data",rd:false });
+    if (user) {
+      user.name = req.body.name;
+      user.email = user.email;
+      user.role = user.role;
+      user.land = req.body.land;
+      user.mobile = req.body.mobile;
+      user.password = req.body.password;
+      await user.save();
+      res.status(201).json({ message: "Account update Successful", rd: true });
+    } else {
+      res
+        .status(204)
+        .send({ message: "user not allowed update data", rd: false });
     }
   } catch (error) {
     console.log(error);

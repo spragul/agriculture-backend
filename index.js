@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userrouter from "./Routers/userRouter.js";
 import vegetablerouter from "./Routers/vegetableRouter.js";
 import shoprouter from "./Routers/shopRouter.js";
+import fprouter from "./Routers/fpRouter.js"
 
 //configure dotenv
 dotenv.config();
@@ -25,6 +26,7 @@ if (res) {
 app.use("/user", userrouter);
 app.use("/vegetable", vegetablerouter);
 app.use("/shop", shoprouter);
+app.use("/fp",fprouter);
 
 //checking backend
 app.use("/", (req, res) => {

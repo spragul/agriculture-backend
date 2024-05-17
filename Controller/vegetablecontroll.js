@@ -48,7 +48,7 @@ export const allVegetable = async (req, res) => {
 export const oneVegetable = async (req, res) => {
   try {
     let vegetable = await VegetableModel.findOne({ _id: req.params.id  });
-    if (vegetable._id) {
+    if (vegetable) {
       res.status(200).json({ message: "get one vegetable ", rd: true });
     } else {
       res.status(204).json({ message: "vegetable id not valid", rd: true });
@@ -66,7 +66,7 @@ export const changeVegetable = async (req, res) => {
   console.log(req.body);
   try {
     let vegetable = await VegetableModel.findOne({ _id: req.body._id });
-    if (vegetable._id) {
+    if (vegetable) {
       vegetable._id = req.body._id;
       vegetable.name = req.body.name;
       vegetable.categories = req.body.categories;
@@ -90,7 +90,7 @@ export const deleteVegetable = async (req, res) => {
   console.log(req.params.id )
   try {
     const vegetable = await VegetableModel.findOne({ _id: req.params.id });
-    if (vegetable._id) {
+    if (vegetable) {
       let veg = await VegetableModel.deleteOne({ _id: req.params.id });
       console.log(veg)
       console.log(veg);
@@ -112,7 +112,7 @@ export const deleteVegetable = async (req, res) => {
 export const changeprice = async (req, res) => {
   try {
     const veg = await VegetableModel.findOne({ _id: req.params.id  });
-    if (veg._id) {
+    if (veg) {
       if (req.body.price > 0) {
         let vegprice = await VegetableModel.findByIdAndUpdate(req.params.id, {
           price: req.body.price,
