@@ -243,6 +243,7 @@ export const updateuser = async (req, res) => {
       user.land = req.body.land;
       user.mobile = req.body.mobile;
       user.password = req.body.password;
+      user.reportsid=user.reportsid;
       await user.save();
       res.status(201).json({ message: "Account update Successful", rd: true });
     } else {

@@ -6,6 +6,8 @@ import userrouter from "./Routers/userRouter.js";
 import vegetablerouter from "./Routers/vegetableRouter.js";
 import shoprouter from "./Routers/shopRouter.js";
 import fprouter from "./Routers/fpRouter.js"
+import soilrouter from "./Routers/soilRouter.js";
+import governmentrouter from "./Routers/governmentRouter.js"
 
 //configure dotenv
 dotenv.config();
@@ -27,6 +29,8 @@ app.use("/user", userrouter);
 app.use("/vegetable", vegetablerouter);
 app.use("/shop", shoprouter);
 app.use("/fp",fprouter);
+app.use("/soilreport",soilrouter);
+app.use("/government",governmentrouter);
 
 //checking backend
 app.use("/", (req, res) => {

@@ -9,7 +9,7 @@ export const addShop = async (req, res) => {
       res.status(208).json({ message: "Shop Allready Created", rd: false });
     } else {
       let newShop = await ShopModel.create(req.body);
-      if (newShop._id) {
+      if (newShop) {
         res
           .status(201)
           .json({ message: "Shop created successful", newShop, rd: true });
@@ -33,6 +33,7 @@ export const editshop = async (req, res) => {
       shop.shopname = req.body.shopname;
       shop.Address = req.body.Address;
       shop.mobile = req.body.mobile;
+      shop.product=shop.product;
       let shop = await shop.save();
       res
         .status(201)

@@ -32,6 +32,10 @@ const userSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
+    reportsid:{
+        type:Array,
+        required:false
+    },
     date: {
         type: Date,
         require:false,
