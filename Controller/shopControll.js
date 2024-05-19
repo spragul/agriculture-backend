@@ -37,7 +37,7 @@ export const editshop = async (req, res) => {
       let shop = await shop.save();
       res
         .status(201)
-        .json({ message: "Shop Details Edit  Successfull", veg, rd: true });
+        .json({ message: "Shop Details Edit  Successfull", shop, rd: true });
     } else {
       res.status(204).json({ message: "shop id not valid", rd: false });
     }
