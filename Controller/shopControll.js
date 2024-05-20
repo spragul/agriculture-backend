@@ -25,21 +25,23 @@ export const addShop = async (req, res) => {
 
 //Edit Shop
 export const editshop = async (req, res) => {
-  console.log(req.body);
   try {
     let shop = await ShopModel.findOne({ _id: req.body._id });
     if (shop) {
       shop._id = req.body._id;
       shop.shopname = req.body.shopname;
       shop.Address = req.body.Address;
+      shop.branch=req.body.branch;
       shop.mobile = req.body.mobile;
       shop.product=shop.product;
-      let shop = await shop.save();
+      let shops = await shop.save();
       res
         .status(201)
-        .json({ message: "Shop Details Edit  Successfull", shop, rd: true });
+        .json({ message: "Shop Details Edit  Successfull", shops, rd: true });
     } else {
-      res.status(204).json({ message: "shop id not valid", rd: false });
+      res
+          .status(404)
+          .json({ message: "Shop id is worng", rd: false });
     }
   } catch (error) {
     res
@@ -73,7 +75,7 @@ export const deleteShop = async (req, res) => {
           .json({ message: "Shop Delete  something went to worng", rd: false });
       }
     } else {
-      res.status(204).json({ message: "Shop id wrong", rd: false });
+      res.status(404).json({ message: "Shop id wrong", rd: false });
     }
   } catch (error) {
     res
@@ -90,7 +92,7 @@ export const getOneShop = async (req, res) => {
     if (shop) {
       res.status(200).json({ message: "Get shop Deatils", shop, rd: true });
     } else {
-      res.status(204).json({ message: "Shop id wrong", rd: false });
+      res.status(404).json({ message: "Shop id wrong", rd: false });
     }
   } catch (error) {
     res
@@ -107,7 +109,7 @@ export const getAllShop = async (req, res) => {
     if (shop) {
       res.status(200).json({ message: "Get All Shop Deatils", shop, rd: true });
     } else {
-      res.status(204).json({ message: "something went to wrong", rd: false });
+      res.status(404).json({ message: "something went to wrong", rd: false });
     }
   } catch (error) {
     res

@@ -5,13 +5,8 @@ import ShopModel from "../Model/shopSchema.js";
 export const addfertilizer = async (req, res) => {
   try {
     let shop = await ShopModel.findOne({ _id: req.params.id });
-    if (shop._id) {
-      const fertilizer = await FpModel.findOne({ fpName: req.body.fpName });
-      if (fertilizer) {
-        res
-          .status(208)
-          .json({ message: "fertilizer Allready Created", rd: false });
-      } else {
+    if (shop) {
+      if (req.body.fpName!=="") {
         let newfertilizer = await FpModel.create(req.body);
         console.log(newfertilizer)
         if (newfertilizer) {
