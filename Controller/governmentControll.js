@@ -77,22 +77,24 @@ export const onegovernment = async (req, res) => {
 export const changegovernment = async (req, res) => {
   console.log(req.body);
   try {
-    let government = await GovernmentModel.findOne({ _id: req.body._id });
+    let government = await GovernmentModel.findOne({ _id: req.params.id });
+    console.log(government)
     if (government) {
       government._id = req.body._id;
       government.schemename = req.body.schemename;
       government.details = req.body.details;
+      government.image=req.body.image;
       government.startingdate = req.body.startingdate;
-      government.price = government.userintraction;
-      let governmens = await government.save();
+      government.discription=req.body.discription;
+      let governments = await government.save();
       res.status(201).json({
         message: "Edit government scheme Successfull",
-        governmens,
+        governments,
         rd: true,
       });
     } else {
       res
-        .status(204)
+        .status(404)
         .json({ message: "government scheme id not valid", rd: false });
     }
   } catch (error) {

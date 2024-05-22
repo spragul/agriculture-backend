@@ -63,7 +63,7 @@ export const editsoil = async (req, res) => {
           rd: true,
         });
     } else {
-      res.status(204).json({ message: "soil report id not valid", rd: false });
+      res.status(404).json({ message: "soil report id not valid", rd: false });
     }
   } catch (error) {
     res
@@ -114,7 +114,7 @@ export const getAllsoil = async (req, res) => {
         .status(200)
         .json({ message: "Get All soil report Deatils", soil, rd: true });
     } else {
-      res.status(204).json({ message: "something went to wrong", rd: false });
+      res.status(404).json({ message: "something went to wrong", rd: false });
     }
   } catch (error) {
     res

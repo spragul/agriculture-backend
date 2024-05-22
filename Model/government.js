@@ -8,8 +8,16 @@ const governmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image:{
+    type: String,
+    required: true,
+  },
+  discription: {
+    type: String,
+    required: true,
+  },
   startingdate: {
-    type: Number,
+    type: Date,
     required: true,
   },
   userreview:[

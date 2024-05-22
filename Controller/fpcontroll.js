@@ -55,7 +55,7 @@ export const editfertilizer = async (req, res) => {
           rd: true,
         });
     } else {
-      res.status(204).json({ message: "fertilizer id not valid", rd: false });
+      res.status(404).json({ message: "fertilizer id not valid", rd: false });
     }
   } catch (error) {
     res

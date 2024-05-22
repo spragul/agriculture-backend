@@ -9,7 +9,7 @@ const soilreportSchema=new mongoose.Schema({
         required:true
      },
      testreportdate:{
-       type:Number,
+       type:Date,
        required:true
      },
      reportdetails:{
@@ -18,7 +18,7 @@ const soilreportSchema=new mongoose.Schema({
      },
      userid:{
       type:String,
-      required:true
+      required:false
      }
 
 })
