@@ -25,7 +25,7 @@ export const createuser = async (req, res) => {
           .status(200)
           .json({ message: "User Register successfull", rd: true });
       } else {
-        res.status(400).json({ message: "Try again later", rd: false });
+        res.status(404).json({ message: "Try again later", rd: false });
       }
     }
   } catch (error) {
@@ -243,7 +243,7 @@ export const updateuser = async (req, res) => {
       user.land = req.body.land;
       user.mobile = req.body.mobile;
       user.password = req.body.password;
-      user.reportsid=user.reportsid;
+      user.reportsid = user.reportsid;
       await user.save();
       res.status(201).json({ message: "Account update Successful", rd: true });
     } else {

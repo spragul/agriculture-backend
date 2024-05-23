@@ -77,15 +77,15 @@ export const onegovernment = async (req, res) => {
 export const changegovernment = async (req, res) => {
   console.log(req.body);
   try {
-    let government = await GovernmentModel.findOne({ _id: req.params.id });
-    console.log(government)
+    let government = await GovernmentModel.findOne({ _id: req.body._id });
+    console.log(government);
     if (government) {
       government._id = req.body._id;
       government.schemename = req.body.schemename;
       government.details = req.body.details;
-      government.image=req.body.image;
+      government.image = req.body.image;
       government.startingdate = req.body.startingdate;
-      government.discription=req.body.discription;
+      government.discription = req.body.discription;
       let governments = await government.save();
       res.status(201).json({
         message: "Edit government scheme Successfull",
@@ -135,10 +135,10 @@ export const deletegovernment = async (req, res) => {
 export const userreview = async (req, res) => {
   try {
     console.log(req.body);
-    let government = await GovernmentModel.findOne({ _id: req.body._id });
+    let government = await GovernmentModel.findOne({ _id: req.params.id });
     if (government) {
       let reviews = await GovernmentModel.findByIdAndUpdate(
-        { _id: req.body._id },
+        { _id: req.params.id },
         {
           $push: {
             userreview: {
@@ -168,6 +168,7 @@ export const userreview = async (req, res) => {
 //delete user review
 
 export const deleteReview = async (req, res) => {
+  console.log(req.params.id,req.body)
   try {
     let count = 0;
     let scheme = await GovernmentModel.findOne({ _id: req.params.id });
@@ -176,13 +177,11 @@ export const deleteReview = async (req, res) => {
       for (let i = 0; i < reviewlist.length; i++) {
         if (reviewlist[i].userid == req.body.userid) {
           if (reviewlist[i]._id == req.body._id) {
-            let deletedata = await GovernmentModel.deleteOne({
-              _id: req.body._id,
-            });
+            let d=await GovernmentModel.findByIdAndUpdate({_id: req.params.id},{$pull:{userreview:{_id:req.body._id}}});
             count = count + 1;
             res.status(200).json({
               message: "Scheme Review Delete successful",
-              deletedata,
+              d,
               rd: true,
             });
           }

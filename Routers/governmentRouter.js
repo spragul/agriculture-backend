@@ -9,6 +9,6 @@ router.post('/addgs',addgovernment);
 router.put('/editgs',changegovernment);
 router.delete("/deletegs/:id",deletegovernment);
 router.patch('/user/review/:id',userreview);
-router.delete('/user/review/delete/:id',deleteReview)
+router.patch('/user/review/delete/:id',deleteReview)
 
 export default router
