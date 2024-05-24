@@ -12,7 +12,7 @@ import governmentrouter from "./Routers/governmentRouter.js"
 //configure dotenv
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors(({origin:`${process.env.FRONTEND_URL}`})));
 app.use(express.json());
 
 //mongodb connection
