@@ -13,13 +13,10 @@ export const addsoil = async (req, res) => {
           .json({ message: "soil test report error", rd: false });
       } else {
         let newsoil = await SoilModel.create(req.body);
-        console.log(newsoil)
         if (newsoil) {
           let add=newsoil._id
             let a=await UserModel.findByIdAndUpdate({_id:req.params.id},{$push:{reportsid:add}});
-            console.log(a);
             let b=await SoilModel.findByIdAndUpdate({_id:newsoil._id},{$set:{userid:req.params.id}});
-            console.log(b);
             let mailid=user.email;
             let link=newsoil;
             let mail=await sendmailuser(mailid,link,"Soil test report")
@@ -45,7 +42,6 @@ export const addsoil = async (req, res) => {
 
 //Edit soil
 export const editsoil = async (req, res) => {
-  console.log(req.body);
   try {
     let soil = await SoilModel.findOne({ _id: req.body._id });
     if (soil) {
@@ -79,7 +75,6 @@ export const deletesoil = async (req, res) => {
     const soil = await SoilModel.findOne({ _id: req.params.id });
     if (soil) {
       let shopproduct=await UserModel.findByIdAndUpdate({_id:soil.userid},{$pullAll:{reportsid:[soil._id]}});
-      console.log(shopproduct)
       const delsoil = await SoilModel.deleteOne({ _id: req.params.id });
       if (deletesoil) {
         res

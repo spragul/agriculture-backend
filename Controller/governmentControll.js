@@ -1,8 +1,9 @@
+import { sendmailuser } from "../Authentication/nodemailer.js";
+import UserModel from "../Model/UserSchema.js";
 import GovernmentModel from "../Model/government.js";
 
 //Add government
 export const addgovernment = async (req, res) => {
-  console.log(req.body);
   try {
     const government = await GovernmentModel.findOne({
       schemename: req.body.schemename,
@@ -14,6 +15,14 @@ export const addgovernment = async (req, res) => {
     } else {
       let newgovernment = await GovernmentModel.create(req.body);
       if (newgovernment) {
+        let userlist=await UserModel.find({});
+        if(userlist.length>0){
+           let link=`schemename:${newgovernment.schemename}, discription:${newgovernment.discription}, details:${newgovernment.details}, startingdate:${newgovernment.startingdate}`;
+           for(let i=0;i<userlist.length;i++){
+            let myemail=userlist[i].email;
+            sendmailuser(myemail,link,"new government Scheme");
+           }
+        }
         res.status(201).json({
           message: "government scheme Created Sucessfuly",
           newgovernment,
@@ -75,10 +84,8 @@ export const onegovernment = async (req, res) => {
 
 //edit government
 export const changegovernment = async (req, res) => {
-  console.log(req.body);
   try {
     let government = await GovernmentModel.findOne({ _id: req.body._id });
-    console.log(government);
     if (government) {
       government._id = req.body._id;
       government.schemename = req.body.schemename;
@@ -107,12 +114,10 @@ export const changegovernment = async (req, res) => {
 
 //delete government
 export const deletegovernment = async (req, res) => {
-  console.log(req.params.id);
   try {
     const government = await GovernmentModel.findOne({ _id: req.params.id });
     if (government) {
       let governments = await GovernmentModel.deleteOne({ _id: req.params.id });
-      console.log(governments);
       res.status(201).json({
         message: "Delete government scheme is successful",
         governments,
@@ -134,7 +139,6 @@ export const deletegovernment = async (req, res) => {
 //add user Review
 export const userreview = async (req, res) => {
   try {
-    console.log(req.body);
     let government = await GovernmentModel.findOne({ _id: req.params.id });
     if (government) {
       let reviews = await GovernmentModel.findByIdAndUpdate(
@@ -149,9 +153,10 @@ export const userreview = async (req, res) => {
           },
         }
       );
+      let governmentss = await GovernmentModel.findOne({ _id: req.params.id });
       res.status(200).json({
         message: "user review add successfully",
-        reviews,
+        governmentss,
         rd: true,
       });
     } else {
@@ -168,7 +173,6 @@ export const userreview = async (req, res) => {
 //delete user review
 
 export const deleteReview = async (req, res) => {
-  console.log(req.params.id,req.body)
   try {
     let count = 0;
     let scheme = await GovernmentModel.findOne({ _id: req.params.id });

@@ -1,12 +1,13 @@
 import express from "express";
 import { addShop,  deleteShop, editshop, getAllShop, getOneShop } from "../Controller/shopControll.js";
+import { shopOwnerAuthentication, validate } from "../Authentication/auth.js";
 
 const router =express.Router();
-router.get('/',getAllShop);
-router.get('/:id',getOneShop);
-router.post("/adddata",addShop);
-router.put("/editdata",editshop);
-router.delete("/deletedata/:id",deleteShop);
+router.get('/',validate,getAllShop);
+router.get('/:id',validate,getOneShop);
+router.post("/adddata",shopOwnerAuthentication,addShop);
+router.put("/editdata",shopOwnerAuthentication,editshop);
+router.delete("/deletedata/:id",shopOwnerAuthentication,deleteShop);
 
 
 export default router

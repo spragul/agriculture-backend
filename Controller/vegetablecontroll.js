@@ -2,7 +2,6 @@ import VegetableModel from "../Model/vegetableSchema.js";
 
 //Add vegetable
 export const addvegetable = async (req, res) => {
-  console.log(req.body)
   try {
     const vegetable = await VegetableModel.findOne({ name: req.body.name });
     if (vegetable) {
@@ -63,7 +62,6 @@ export const oneVegetable = async (req, res) => {
 
 //edit vegetable
 export const changeVegetable = async (req, res) => {
-  console.log(req.body);
   try {
     let vegetable = await VegetableModel.findOne({ _id: req.body._id });
     if (vegetable) {
@@ -87,13 +85,10 @@ export const changeVegetable = async (req, res) => {
 
 //delete vegetable
 export const deleteVegetable = async (req, res) => {
-  console.log(req.params.id )
   try {
     const vegetable = await VegetableModel.findOne({ _id: req.params.id });
     if (vegetable) {
       let veg = await VegetableModel.deleteOne({ _id: req.params.id });
-      console.log(veg)
-      console.log(veg);
       res
         .status(201)
         .json({ message: "Delete Vegetable is successful",veg, rd: true });

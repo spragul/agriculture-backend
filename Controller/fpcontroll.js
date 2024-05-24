@@ -8,13 +8,10 @@ export const addfertilizer = async (req, res) => {
     if (shop) {
       if (req.body.fpName!=="") {
         let newfertilizer = await FpModel.create(req.body);
-        console.log(newfertilizer)
         if (newfertilizer) {
           let add=newfertilizer._id
             let a=await ShopModel.findByIdAndUpdate({_id:req.params.id},{$push:{product:add}});
-            console.log(a);
             let b=await FpModel.findByIdAndUpdate({_id:newfertilizer._id},{$set:{shopid:req.params.id}});
-            console.log(b)
           res
             .status(201)
             .json({
@@ -37,7 +34,6 @@ export const addfertilizer = async (req, res) => {
 
 //Edit fertilizer
 export const editfertilizer = async (req, res) => {
-  console.log(req.body);
   try {
     let fertilizer = await FpModel.findOne({ _id: req.body._id });
     if (fertilizer) {
@@ -71,7 +67,6 @@ export const deletefertilizer = async (req, res) => {
     const fertilizer = await FpModel.findOne({ _id: req.params.id });
     if (fertilizer) {
       let shopproduct=await ShopModel.findByIdAndUpdate({_id:fertilizer.shopid},{$pullAll:{product:[fertilizer._id]}});
-      console.log(shopproduct)
       const delfertilizer = await FpModel.deleteOne({ _id: req.params.id });
       if (deletefertilizer) {
         res
