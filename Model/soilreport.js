@@ -13,7 +13,7 @@ const soilreportSchema=new mongoose.Schema({
        required:true
      },
      reportdetails:{
-       type:Array,
+       type:String,
        required:true
      },
      userid:{
