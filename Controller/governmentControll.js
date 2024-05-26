@@ -154,9 +154,10 @@ export const userreview = async (req, res) => {
         }
       );
       let governmentss = await GovernmentModel.findOne({ _id: req.params.id });
+      let lastReview=governmentss.userreview[governmentss.userreview.length-1];
       res.status(200).json({
         message: "user review add successfully",
-        governmentss,
+        lastReview,
         rd: true,
       });
     } else {
